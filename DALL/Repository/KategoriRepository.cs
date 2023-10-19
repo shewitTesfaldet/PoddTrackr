@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Models; 
+using Models;
 namespace DAL.Repository
 
 {
@@ -38,16 +38,19 @@ namespace DAL.Repository
             {
                 listOfKategori.RemoveAt(index);
                 SaveChanges();
+
             }
-            else {
-                Console.WriteLine("testa igen tönt"); }
         }
 
+        public int GetIndexName(string name) {
+            int KategoriIndex = GetAll().FindIndex(e => e.Genre.Equals(name));
+            return KategoriIndex;   
+        }
         public List<Kategori> GetAll()
-        {  List<Kategori> list = new List<Kategori>();  
+        {    
             try
             {
-                list= serializer.Deserialize();
+                listOfKategori= serializer.Deserialize();
 
             }
 
@@ -55,7 +58,7 @@ namespace DAL.Repository
              Console.WriteLine(e.Message);
                
             }                     
-            return list;
+            return listOfKategori;
           
         }
 
@@ -66,5 +69,11 @@ namespace DAL.Repository
 
        
 
+      
+
+        public Podcast GetPodcast(string url)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
