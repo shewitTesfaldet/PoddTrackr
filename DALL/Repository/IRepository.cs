@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,12 @@ namespace DAL.Repository
 
         List<T> GetAll();
 
+      
         void SaveChanges();
 
+        Podcast GetPodcast(string url);
+        int GetIndexName(string name);
+
+       
     }
 }

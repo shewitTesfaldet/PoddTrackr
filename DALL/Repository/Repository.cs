@@ -1,56 +1,94 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+﻿using Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Policy;
+using System.Text;
+using System.Threading.Tasks;
 
 
-//namespace DAL.Repository
-//{
-//    public class Repository<T> : IRepository<T>
-//    {
-//        public void Create(T entity)
-//        {
+namespace DAL.Repository
+{
+    public class Repository : IRepository<Podcast>
+    {
+        List<Podcast> list = new List<Podcast>();
 
 
-//            try
-//            {
-//                using (FileStream fileStream = new FileStream("Kategori.txt", FileMode.Append, FileAccess.Write))
-//                {
-//                    using (StreamWriter writer = new StreamWriter(fileStream))
-//                    {
-//                        writer.WriteLine(kategori.Genre);
-//                    }
+        Serializer serializer = new Serializer();
 
-//                }
+        Podcast enPodcast;
 
-//            }
 
-//            catch (IOException y)
-//            {
-//                Console.WriteLine(y.Message);
-//            }
-//            throw new NotImplementedException();
-//        }
+        public void Create(Podcast entity)
+        {
+            list.Add(entity);
+            SaveChanges();
+        }
 
-//        public void Delete(int index)
-//        {
-//            throw new NotImplementedException();
-//        }
+        public int GetIndexName(string name)
+        {
+            int PodcastIndex = GetAll().FindIndex(e => e.Title.Equals(name));
+            return PodcastIndex;
+        }
 
-//        public List<T> GetAll()
-//        {
-//            throw new NotImplementedException();
-//        }
+        public void Delete(int index)
+        {
+            if (index >= 0 && index < list.Count)
+            {
+                list.RemoveAt(index);
+                SaveChanges();
 
-//        public void SaveChanges()
-//        {
-//            throw new NotImplementedException();
-//        }
+            }
 
-//        public void Update(int index, T entity)
-//        {
-//            throw new NotImplementedException();
-//        }
-//    }
-//}
+        }
+
+        public List<Podcast> GetAll()
+        {
+            try
+            {
+                list = serializer.PoddDeserialize();
+
+
+            }
+
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+
+            }
+            return list;
+
+        }
+
+        public void SaveChanges()
+        {
+            serializer.PoddSerialize(list);
+        }
+
+        public void Update(int index, Podcast entity)
+        {
+            list[index] = entity;
+            SaveChanges();
+        }
+
+        public Podcast GetPodcast(string url)
+        {
+            try
+            {
+                enPodcast = serializer.desiralized(url);
+
+
+            }
+
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+
+            }
+
+            return enPodcast;
+        }
+
+      
+    }
+}

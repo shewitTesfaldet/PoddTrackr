@@ -71,17 +71,21 @@ namespace PL
 
         private void deleteButton_Click_1(object sender, EventArgs e)
         {
-
-            object selectedItem = listBox1.SelectedItem; 
+            object selectedItem = listBox1.SelectedItem;
             if (selectedItem != null)
 
             {
-                int selectedIndex = listBox1.SelectedIndex;
-                controller.Delete(selectedIndex);
-                listBox1.Items.Clear();
-                getGenre();
+                DialogResult result = MessageBox.Show("Är du säker att du vill ta bort?", "Ta bort kategori", MessageBoxButtons.OKCancel);
+                if (result == DialogResult.OK)
+                {
+                    string value = listBox1.SelectedItem.ToString();
+                    controller.Delete(value);
+                    listBox1.Items.Clear();
+                    getGenre();
+                }
 
             }
+
 
 
         }

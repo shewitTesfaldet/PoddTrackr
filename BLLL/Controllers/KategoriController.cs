@@ -7,7 +7,7 @@ using DAL.Repository;
 using System.Xml.Serialization; 
 
 using Models;
-
+using System.Dynamic;
 
 namespace BLL.Controllers
 {
@@ -16,8 +16,7 @@ namespace BLL.Controllers
         IRepository<Kategori> Repository;
         public KategoriController() {
             Repository = new KategoriRepository(); 
-            
-        
+                 
         }
 
        public void CreateKategori(string kategoriNamn)
@@ -38,9 +37,27 @@ namespace BLL.Controllers
             Repository.Update(index, kategori); 
         }
 
-        public void Delete(int index) 
+
+        public void Delete(string name)
         {
-            Repository.Delete(index);
+
+            List<Kategori> list = new List<Kategori>();
+            list = Repository.GetAll();
+
+            foreach (Kategori item in list) {
+                if (item.Genre.Equals(name)) {
+
+                    int index = GetIndex(name);
+                    Repository.Delete(index);
+
+                }
+            }
+        }
+
+      private int GetIndex(string name)
+        {
+
+            return Repository.GetIndexName(name);
         }
 
     }
