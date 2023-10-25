@@ -70,7 +70,7 @@ namespace PL
                 listBoxAvsnitt.Items.Add(avsnitt.Titel);
             }
 
-            listBoxPoddar.Items.Add(enPodcast.AntalAvsnitt + " " + enPodcast.Title + " " + enPodcast.Frekvens + " " + Namn + " " + enPodcast.Kategori.Genre);
+            listBoxPoddar.Items.Add(enPodcast.AntalAvsnitt + " " + enPodcast.Title + " " + Namn + " " + enPodcast.Kategori.Genre);
             podcastController.CreatePodcast(enPodcast);
         }
 
@@ -119,7 +119,7 @@ namespace PL
             if (selectedItem != null && !nyNamn.Equals(null) && !nyKategori.Equals(null))
             {
                 //Podcast object för repo -> Podcast.txt
-                Podcast nyPodcast = new Podcast(enPodcast.Title, nyKategori, enPodcast.Beskrivning, enPodcast.AntalAvsnitt, enPodcast.Frekvens, nyNamn);
+                Podcast nyPodcast = new Podcast(enPodcast.AntalAvsnitt, nyNamn, enPodcast.Title, nyKategori, enPodcast.Beskrivning);
                 int selectedIndex = listBoxPoddar.SelectedIndex;
                 podcastController.Change(selectedIndex, nyPodcast);
 
@@ -128,7 +128,7 @@ namespace PL
                 //listBoxPoddar.Items.Clear();
 
                 //Lokal object för listboxPoddar i string/int
-                object nyPodd = enPodcast.AntalAvsnitt + " " + enPodcast.Title + " " + enPodcast.Frekvens + " " + nyNamn + " " + CBKategori.Text;
+                object nyPodd = enPodcast.AntalAvsnitt + " " + enPodcast.Title + " " + nyNamn + " " + CBKategori.Text;
               
                     listBoxPoddar.Items.Insert(selectedIndex, nyPodd);
 
@@ -154,19 +154,19 @@ namespace PL
             int selectedIndex = listBoxPoddar.SelectedIndex;
             List<Podcast> allaPoddar = podcastController.GetAll();
            
-                if (selectedIndex <= allaPoddar.Count)
+                if (selectedIndex <= allaPoddar.Count && selectedIndex >= 0)
                 {
                     Podcast podd = allaPoddar[selectedIndex];
                     listBoxAvsnitt.Items.Clear();
                     listBoxInfo.Items.Clear();
                     listBoxInfo.Items.Add(podd.Beskrivning);
-                List<Avsnitt> nyLista = podd.avsnittLista.Where(avsnitt => avsnitt != null)
-                    .ToList();
+                //List<Avsnitt> nyLista = podd.avsnittLista.Where(avsnitt => avsnitt != null)
+                //    .ToList();
 
-                foreach (var avsnitt in nyLista)
-                {
-                    listBoxAvsnitt.Items.Add(avsnitt); // Antag att du vill lägga till avsnitten i listBoxAvsnitt.
-                }
+                //foreach (var avsnitt in nyLista)
+                //{
+                //    listBoxAvsnitt.Items.Add(avsnitt); // Antag att du vill lägga till avsnitten i listBoxAvsnitt.
+                //}
 
 
             }
@@ -175,6 +175,21 @@ namespace PL
 
         }
 
-      
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            int selectedIndex = listBoxPoddar.SelectedIndex;
+
+            if (selectedIndex >= 0)
+            {
+                DialogResult result = MessageBox.Show("Är du säker att du vill ta bort?", "Ta bort podcast", MessageBoxButtons.OKCancel);
+                if (result == DialogResult.OK)
+                {
+                    PodcastController controller = new PodcastController();
+                    controller.Delete(selectedIndex);
+                    listBoxPoddar.Items.RemoveAt(selectedIndex);
+                }
+            }
+
+        }
     }
 }
