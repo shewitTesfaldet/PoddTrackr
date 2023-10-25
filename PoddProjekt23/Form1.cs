@@ -49,7 +49,7 @@ namespace PL
             string url = textBoxUrl.Text;
 
             enPodcast = podcastController.GetPodcast(url);
-            txtNamn.Text = enPodcast?.Title;
+            //txtNamn.Text = enPodcast?.Title;
 
             string kategori = CBKategori.Text;
 
@@ -70,7 +70,7 @@ namespace PL
                 listBoxAvsnitt.Items.Add(avsnitt.Titel);
             }
 
-            listBoxPoddar.Items.Add(enPodcast.AntalAvsnitt + " " + enPodcast.Title + " " + Namn + " " + enPodcast.Kategori.Genre);
+            listBoxPoddar.Items.Add(enPodcast.AntalAvsnitt + " " + enPodcast.Title  + " " + Namn + " " + enPodcast.Kategori.Genre);
             podcastController.CreatePodcast(enPodcast);
         }
 
@@ -119,7 +119,7 @@ namespace PL
             if (selectedItem != null && !nyNamn.Equals(null) && !nyKategori.Equals(null))
             {
                 //Podcast object för repo -> Podcast.txt
-                Podcast nyPodcast = new Podcast(enPodcast.AntalAvsnitt, nyNamn, enPodcast.Title, nyKategori, enPodcast.Beskrivning);
+                Podcast nyPodcast = new Podcast(enPodcast.AntalAvsnitt, nyNamn, enPodcast.Title, nyKategori, enPodcast.Beskrivning  );
                 int selectedIndex = listBoxPoddar.SelectedIndex;
                 podcastController.Change(selectedIndex, nyPodcast);
 
@@ -134,17 +134,9 @@ namespace PL
 
                 //Problem uppstår pga att "Presistent" data inte finns i programmet, leder till tomma objekt vid omstart!!!
 
-                //kontroll
-                //MessageBox.Show("Ny namn: " + nyPodcast.Namn);
-                //MessageBox.Show("Ny kategori: " + nyPodcast.Kategori.Genre);
-
-              
 
             }
-            else
-            {
-                //TODO: behöver valideras
-            }
+      
 
 
         }
@@ -156,6 +148,7 @@ namespace PL
            
                 if (selectedIndex <= allaPoddar.Count && selectedIndex >= 0)
                 {
+                
                     Podcast podd = allaPoddar[selectedIndex];
                     listBoxAvsnitt.Items.Clear();
                     listBoxInfo.Items.Clear();
