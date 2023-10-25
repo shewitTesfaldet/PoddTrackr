@@ -27,27 +27,38 @@ namespace PL
         {
             InitializeComponent();
             podcastController = new PodcastController();
-            kategoriController = new KategoriController();  
+            kategoriController = new KategoriController();
             enPodcast = new Podcast();
             getGenre();
-            getPodcast();   
+            getPodcast();
+        }
+
+        private void getPodcast()
+        {
+            foreach (Podcast item in podcastController.GetAll())
+            {
+                listBoxPoddar.Items.Add(item.AntalAvsnitt + " " + item.Title + " " + item.Namn);
+
+            }
         }
 
         private void buttonKategori_Click(object sender, EventArgs e)
         {
+            listBoxInfo.Items.Clear();
+            listBoxAvsnitt.Items.Clear();
             string url = textBoxUrl.Text;
-            
+
             enPodcast = podcastController.GetPodcast(url);
-            txtNamn.Text = enPodcast.Title;
+            txtNamn.Text = enPodcast?.Title;
 
             string kategori = CBKategori.Text;
 
             Kategori k = new Kategori(kategori);
 
             enPodcast.Kategori = k;
-            
+
             string Namn = txtNamn.Text;
-            if (!Namn.Equals(enPodcast.Title)) 
+            if (!Namn.Equals(enPodcast.Title))
             {
                 enPodcast.Namn = Namn;
             }
@@ -59,15 +70,15 @@ namespace PL
                 listBoxAvsnitt.Items.Add(avsnitt.Titel);
             }
 
-            listBoxPoddar.Items.Add(enPodcast.AntalAvsnitt + " " + enPodcast.Title + " " + enPodcast.Frekvens + " " + enPodcast.Namn + " " + enPodcast.Kategori.Genre);
+            listBoxPoddar.Items.Add("Antal avsnitt: " + enPodcast.AntalAvsnitt + " Titel: " + enPodcast.Title + " Namn: " + enPodcast.Namn + " Kategori: " + enPodcast.Kategori.Genre);
             podcastController.CreatePodcast(enPodcast);
         }
 
-    
-        
+
+
         private void label4_Click(object sender, EventArgs e)
         {
-           this.Close();
+            this.Close();
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -95,30 +106,15 @@ namespace PL
 
 
 
-        private void getPodcast()
-        {
-            foreach (Podcast item in podcastController.GetAll())
-            {
-
-                listBoxPoddar.Items.Add(item.AntalAvsnitt + " " + item.Title + " " + item.Namn);
-          
-                    
-                
-            }
-        }
-
-
-
-
         private void button2_Click(object sender, EventArgs e)
         {
             object selectedItem = listBoxPoddar.SelectedItem;
-
             string kategori = CBKategori.Text;
+
             Kategori kategori1 = new Kategori(kategori);
             string Namn = txtNamn.Text;
-            Podcast nyPodcast = new Podcast(enPodcast.Title, kategori1, enPodcast.Beskrivning, enPodcast.AntalAvsnitt, enPodcast.Frekvens, Namn);
-            
+            Podcast nyPodcast = new Podcast(enPodcast.AntalAvsnitt, Namn, enPodcast.Title, kategori1, enPodcast.Beskrivning);
+
             if (selectedItem != null)
             {
                 int selectedIndex = listBoxPoddar.SelectedIndex;
@@ -131,6 +127,34 @@ namespace PL
             {
                 //TODO: behöver valideras
             }
+
+
+        }
+
+        private void listBoxPoddar_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int selectedIndex = listBoxPoddar.SelectedIndex;
+            List<Podcast> allaPoddar = podcastController.GetAll();
+           
+                if (selectedIndex <= allaPoddar.Count)
+                {
+                    Podcast podd = allaPoddar[selectedIndex];
+                    listBoxAvsnitt.Items.Clear();
+                    listBoxInfo.Items.Clear();
+                    listBoxInfo.Items.Add(podd.Beskrivning);
+                List<Avsnitt> nyLista = podd.avsnittLista.Where(avsnitt => avsnitt != null)
+                    .ToList();
+
+                foreach (var avsnitt in nyLista)
+                {
+                    listBoxAvsnitt.Items.Add(avsnitt); // Antag att du vill lägga till avsnitten i listBoxAvsnitt.
+                }
+
+
+            }
+           
+
+
         }
     }
 }

@@ -75,5 +75,10 @@ namespace DAL.Repository
         {
             throw new NotImplementedException();
         }
+
+        public List<Avsnitt> GetAllAvsnitt()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

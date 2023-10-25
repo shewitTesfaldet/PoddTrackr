@@ -32,9 +32,7 @@
             this.textBoxUrl = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.CBKategori = new System.Windows.Forms.ComboBox();
-            this.comboBoxFrekvens = new System.Windows.Forms.ComboBox();
             this.listBoxInfo = new System.Windows.Forms.ListBox();
             this.listBoxAvsnitt = new System.Windows.Forms.ListBox();
             this.listBoxPoddar = new System.Windows.Forms.ListBox();
@@ -76,16 +74,6 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "Kategori";
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(35, 170);
-            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(51, 13);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Frekvens";
-            // 
             // CBKategori
             // 
             this.CBKategori.FormattingEnabled = true;
@@ -95,28 +83,19 @@
             this.CBKategori.Size = new System.Drawing.Size(102, 21);
             this.CBKategori.TabIndex = 7;
             // 
-            // comboBoxFrekvens
-            // 
-            this.comboBoxFrekvens.FormattingEnabled = true;
-            this.comboBoxFrekvens.Location = new System.Drawing.Point(38, 185);
-            this.comboBoxFrekvens.Margin = new System.Windows.Forms.Padding(2);
-            this.comboBoxFrekvens.Name = "comboBoxFrekvens";
-            this.comboBoxFrekvens.Size = new System.Drawing.Size(102, 21);
-            this.comboBoxFrekvens.TabIndex = 8;
-            // 
             // listBoxInfo
             // 
             this.listBoxInfo.FormattingEnabled = true;
             this.listBoxInfo.Location = new System.Drawing.Point(408, 42);
             this.listBoxInfo.Margin = new System.Windows.Forms.Padding(2);
             this.listBoxInfo.Name = "listBoxInfo";
-            this.listBoxInfo.Size = new System.Drawing.Size(354, 186);
+            this.listBoxInfo.Size = new System.Drawing.Size(445, 160);
             this.listBoxInfo.TabIndex = 9;
             // 
             // listBoxAvsnitt
             // 
             this.listBoxAvsnitt.FormattingEnabled = true;
-            this.listBoxAvsnitt.Location = new System.Drawing.Point(554, 293);
+            this.listBoxAvsnitt.Location = new System.Drawing.Point(641, 319);
             this.listBoxAvsnitt.Margin = new System.Windows.Forms.Padding(2);
             this.listBoxAvsnitt.Name = "listBoxAvsnitt";
             this.listBoxAvsnitt.Size = new System.Drawing.Size(298, 277);
@@ -130,6 +109,7 @@
             this.listBoxPoddar.Name = "listBoxPoddar";
             this.listBoxPoddar.Size = new System.Drawing.Size(480, 251);
             this.listBoxPoddar.TabIndex = 11;
+            this.listBoxPoddar.SelectedIndexChanged += new System.EventHandler(this.listBoxPoddar_SelectedIndexChanged);
             // 
             // buttonKategori
             // 
@@ -145,7 +125,7 @@
             // close
             // 
             this.close.AutoSize = true;
-            this.close.Location = new System.Drawing.Point(832, 16);
+            this.close.Location = new System.Drawing.Point(1021, 9);
             this.close.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.close.Name = "close";
             this.close.Size = new System.Drawing.Size(14, 13);
@@ -207,7 +187,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(863, 605);
+            this.ClientSize = new System.Drawing.Size(1058, 671);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnChange);
             this.Controls.Add(this.label4);
@@ -218,9 +198,7 @@
             this.Controls.Add(this.listBoxPoddar);
             this.Controls.Add(this.listBoxAvsnitt);
             this.Controls.Add(this.listBoxInfo);
-            this.Controls.Add(this.comboBoxFrekvens);
             this.Controls.Add(this.CBKategori);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBoxUrl);
@@ -238,9 +216,7 @@
         private System.Windows.Forms.TextBox textBoxUrl;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox CBKategori;
-        private System.Windows.Forms.ComboBox comboBoxFrekvens;
         private System.Windows.Forms.ListBox listBoxInfo;
         private System.Windows.Forms.ListBox listBoxAvsnitt;
         private System.Windows.Forms.ListBox listBoxPoddar;
