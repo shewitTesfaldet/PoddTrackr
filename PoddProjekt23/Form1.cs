@@ -70,7 +70,7 @@ namespace PL
                 listBoxAvsnitt.Items.Add(avsnitt.Titel);
             }
 
-            listBoxPoddar.Items.Add("Antal avsnitt: " + enPodcast.AntalAvsnitt + " Titel: " + enPodcast.Title + " Namn: " + enPodcast.Namn + " Kategori: " + enPodcast.Kategori.Genre);
+            listBoxPoddar.Items.Add(enPodcast.AntalAvsnitt + " " + enPodcast.Title + " " + enPodcast.Frekvens + " " + Namn + " " + enPodcast.Kategori.Genre);
             podcastController.CreatePodcast(enPodcast);
         }
 
@@ -111,16 +111,34 @@ namespace PL
             object selectedItem = listBoxPoddar.SelectedItem;
             string kategori = CBKategori.Text;
 
-            Kategori kategori1 = new Kategori(kategori);
-            string Namn = txtNamn.Text;
-            Podcast nyPodcast = new Podcast(enPodcast.AntalAvsnitt, Namn, enPodcast.Title, kategori1, enPodcast.Beskrivning);
+            Kategori nyKategori = new Kategori(CBKategori.Text);
 
-            if (selectedItem != null)
+            string nyNamn = txtNamn.Text;
+
+
+            if (selectedItem != null && !nyNamn.Equals(null) && !nyKategori.Equals(null))
             {
+                //Podcast object för repo -> Podcast.txt
+                Podcast nyPodcast = new Podcast(enPodcast.Title, nyKategori, enPodcast.Beskrivning, enPodcast.AntalAvsnitt, enPodcast.Frekvens, nyNamn);
                 int selectedIndex = listBoxPoddar.SelectedIndex;
                 podcastController.Change(selectedIndex, nyPodcast);
 
-                listBoxPoddar.Items.Clear();
+
+                listBoxPoddar.Items.RemoveAt(selectedIndex);
+                //listBoxPoddar.Items.Clear();
+
+                //Lokal object för listboxPoddar i string/int
+                object nyPodd = enPodcast.AntalAvsnitt + " " + enPodcast.Title + " " + enPodcast.Frekvens + " " + nyNamn + " " + CBKategori.Text;
+              
+                    listBoxPoddar.Items.Insert(selectedIndex, nyPodd);
+
+                //Problem uppstår pga att "Presistent" data inte finns i programmet, leder till tomma objekt vid omstart!!!
+
+                //kontroll
+                //MessageBox.Show("Ny namn: " + nyPodcast.Namn);
+                //MessageBox.Show("Ny kategori: " + nyPodcast.Kategori.Genre);
+
+              
 
             }
             else
@@ -156,5 +174,7 @@ namespace PL
 
 
         }
+
+      
     }
 }
