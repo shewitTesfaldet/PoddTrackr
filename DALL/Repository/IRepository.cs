@@ -20,7 +20,6 @@ namespace DAL.Repository
 
         Podcast GetPodcast(string url);
         int GetIndexName(string name);
-
-       
+        List<Avsnitt> GetAllAvsnitt();
     }
 }
