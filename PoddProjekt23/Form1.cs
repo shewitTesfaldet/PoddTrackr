@@ -168,6 +168,21 @@ namespace PL
 
         }
 
-      
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            int selectedIndex = listBoxPoddar.SelectedIndex;
+
+            if (selectedIndex >= 0)
+            {
+                DialogResult result = MessageBox.Show("Är du säker att du vill ta bort?", "Ta bort podcast", MessageBoxButtons.OKCancel);
+                if (result == DialogResult.OK)
+                {
+                    PodcastController controller = new PodcastController();
+                    controller.Delete(selectedIndex);
+                    listBoxPoddar.Items.RemoveAt(selectedIndex);
+                }
+            }
+
+        }
     }
 }
