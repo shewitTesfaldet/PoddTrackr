@@ -106,11 +106,14 @@ namespace DAL
                                 poddTitel = item.Element("title")?.Value;
 
                             }
-
+                            foreach (XElement item in xmlDoc.Descendants("channel")) {
+                               string beskrivningen = item.Element("description")?.Value;
+                                beskrivning = beskrivningen.Replace(",", "");
+                            }
+                            Console.WriteLine(beskrivning);
                             foreach (XElement item in xmlDoc.Descendants("item"))
                             {
                                 title = item.Element("title")?.Value;
-                                beskrivning = item.Element("description")?.Value;
 
 
                                 if (!string.IsNullOrEmpty(title))
@@ -123,9 +126,11 @@ namespace DAL
                             }
                             Kategori kategori = new Kategori("");
 
-                            podcast = new Podcast(poddTitel, kategori, beskrivning, antalAvsnitt, 0, "");
+                            podcast = new Podcast(antalAvsnitt, "", poddTitel, kategori, beskrivning);
                             Console.WriteLine(poddTitel);
                             podcast.avsnittLista = avsnittsLista;
+                            AvsnittSerialize(avsnittsLista);
+
 
 
                         }
@@ -160,8 +165,7 @@ namespace DAL
                         {
                             if (item.Title != null && item.Namn != null && item.Kategori.Genre != null && item.AntalAvsnitt != 0)
                             {
-                                sw.WriteLine(item.AntalAvsnitt + " " + item.Namn + " " + item.Title + " " + item.Frekvens + " " + item.Kategori.Genre);
-
+                                sw.WriteLine(item.AntalAvsnitt + ", " + item.Namn + ", " + item.Title + ", " + item.Kategori.Genre + ", " + item.Beskrivning);
                             }
 
                         }
@@ -193,45 +197,27 @@ namespace DAL
                         while ((line = sr.ReadLine()) != null)
                         {
                             Podcast pod = new Podcast();
-                            string[] arg = line.Split(' ');
+                            string[] arg = line.Split(',');
+
+                            if (arg.Length == 5) {
+
+                                string antal = arg[0];
+                                pod.AntalAvsnitt = int.Parse(antal);
+                                pod.Namn = arg[1];
+                                pod.Title = arg[2];
+                                Kategori nyKategori = new Kategori(arg[3]);
+                                pod.Kategori = nyKategori;
+                                pod.Beskrivning = arg[4];
+                            }
+
                             foreach (string arg2 in arg)
                             {
                                 Console.WriteLine(arg2);
-                                // Här kan du använda 'arg2' för att sätta egenskaper på ditt 'pod'-objekt
                             }
+
                             list.Add(pod);
                         }
-
-
-                        //foreach (Podcast item in list)
-                        //{
-                        //    string line = sr.ReadLine();
-
-
-                        //   Podcast pod = new Podcast();
-                        //   string[] arg = line.Split(' ');
-                        // foreach(string arg2 in arg)
-                        //    {
-
-                        //        Console.WriteLine(arg2); 
-
-
-                        //    }
-
-
-                        //    while (line != null)
-
-
-
-                        //    {
-                        //        //list.Add(line);
-                        //        line = sr.ReadLine();
-                        //    }
-
            
-
-
-
                     }
                 }
             }
@@ -244,6 +230,36 @@ namespace DAL
             return list;
         }
 
+
+
+        public List<Avsnitt> AvsnittSerialize(List<Avsnitt> list)
+        {
+            try
+            {
+                using (FileStream xmlOut =
+                    new FileStream("Avsnitt.txt", FileMode.Create, FileAccess.Write))
+                {
+                    using (StreamWriter sw = new StreamWriter(xmlOut))
+                    {
+                       foreach(Avsnitt avsnitt in list) {
+                            sw.WriteLine(avsnitt.Titel);
+
+                        }
+
+
+
+
+                    }
+                }
+            }
+
+            catch (Exception e)
+
+            {
+                Console.WriteLine(e.Message);
+            }
+            return list;
+        }
 
     }
 }

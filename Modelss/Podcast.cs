@@ -7,19 +7,17 @@ namespace Models
 {
     public class Podcast
     {
-        public string Title { get; set; }
-        public Kategori Kategori { get; set; }
-        public int Frekvens { get; set; }   
-        public string Beskrivning { get; set; }
         public int AntalAvsnitt { get; set; }
 
+        public string Title { get; set; }
+        public Kategori Kategori { get; set; }
+        public string Beskrivning { get; set; }
         public string Namn { get; set; }
         public List<Avsnitt> avsnittLista;
         
-        public Podcast(string title, Kategori kategori, string beskrivning, int antalAvsnitt, int frekvens, string namn) {
+        public Podcast(int antalAvsnitt, string namn, string title, Kategori kategori, string beskrivning ) {
             Title = title;
             Kategori = kategori;
-            Frekvens = frekvens;
             Beskrivning = beskrivning;
             AntalAvsnitt = antalAvsnitt;
             Namn = namn;
