@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using BLL;
 using BLL.Controllers;
 using Models;
+using Modelss;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 
@@ -18,7 +19,7 @@ namespace PL
 
 {
     public partial class Form1 : Form
-    {
+    {  Validering validering= new Validering();
         PodcastController podcastController;
         KategoriController kategoriController;
         Podcast enPodcast = null;
@@ -37,41 +38,69 @@ namespace PL
         {
             foreach (Podcast item in podcastController.GetAll())
             {
-                listBoxPoddar.Items.Add(item.AntalAvsnitt + " " + item.Title + " " + item.Namn);
+                listBoxPoddar.Items.Add(item.AntalAvsnitt + " " + item.Title + " " + item.Namn + " " + item.Kategori.Genre);
 
             }
         }
 
         private void buttonKategori_Click(object sender, EventArgs e)
         {
-            listBoxInfo.Items.Clear();
-            listBoxAvsnitt.Items.Clear();
-            string url = textBoxUrl.Text;
 
-            enPodcast = podcastController.GetPodcast(url);
-            txtNamn.Text = enPodcast?.Title;
+            List<Podcast> list = podcastController.GetAll();    
 
-            string kategori = CBKategori.Text;
-
-            Kategori k = new Kategori(kategori);
-
-            enPodcast.Kategori = k;
-
-            string Namn = txtNamn.Text;
-            if (!Namn.Equals(enPodcast.Title))
+            if (!validering.NameInputValidate<string>(textBoxUrl.Text, list))
             {
-                enPodcast.Namn = Namn;
+
+                MessageBox.Show("Namnet finns redan, Vänligen skriv ett annat :)", "Felaktig Inmatning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
 
-            listBoxInfo.Items.Add(enPodcast.Beskrivning);
+            //else if (!validering.textInputsValidate(txtNamn.Text))
+            //{
 
-            foreach (Avsnitt avsnitt in enPodcast.avsnittLista)
+            //    MessageBox.Show("Endast bokstäver är tillåtna", "Felaktig Inmatning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            //}
+
+            else if (!validering.NullNotAcceptedValidate(txtNamn.Text, textBoxUrl.Text, CBKategori.Text))
             {
-                listBoxAvsnitt.Items.Add(avsnitt.Titel);
+                MessageBox.Show("Fyll rutan!", "Felaktig Inmatning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
             }
 
-            listBoxPoddar.Items.Add("Antal avsnitt: " + enPodcast.AntalAvsnitt + " Titel: " + enPodcast.Title + " Namn: " + enPodcast.Namn + " Kategori: " + enPodcast.Kategori.Genre);
-            podcastController.CreatePodcast(enPodcast);
+            else
+            {
+                listBoxInfo.Items.Clear();
+                listBoxAvsnitt.Items.Clear();
+                string url = textBoxUrl.Text;
+
+                enPodcast = podcastController.GetPodcast(url);
+                txtNamn.Text = enPodcast?.Title;
+
+                string kategori = CBKategori.Text;
+
+                Kategori k = new Kategori(kategori);
+
+                enPodcast.Kategori = k;
+
+                string Namn = txtNamn.Text;
+                if (!Namn.Equals(enPodcast.Title))
+                {
+                    enPodcast.Namn = Namn;
+                }
+
+                listBoxInfo.Items.Add(enPodcast.Beskrivning);
+
+                foreach (Avsnitt avsnitt in enPodcast.avsnittLista)
+                {
+                    listBoxAvsnitt.Items.Add(avsnitt.Titel);
+                }
+
+                listBoxPoddar.Items.Add("Antal avsnitt: " + enPodcast.AntalAvsnitt + " Titel: " + enPodcast.Title + " Namn: " + enPodcast.Namn + " Kategori: " + enPodcast.Kategori.Genre);
+                podcastController.CreatePodcast(enPodcast);
+
+
+            }
+
+          
         }
 
 
