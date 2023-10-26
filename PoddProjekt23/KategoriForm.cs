@@ -11,12 +11,13 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.IO;
 using Models;
 using BLL.Controllers;
+using Modelss;
 
 namespace PL
 {
     public partial class KategoriForm : Form
     {
-
+        Validering validering= new Validering();
         KategoriController controller;
         public KategoriForm()
         {
@@ -33,11 +34,33 @@ namespace PL
 
         private void addButton_Click_1(object sender, EventArgs e)
         {
-            string KategoriNamn = textBox1.Text;
-            controller.CreateKategori(KategoriNamn);
-            listBox1.Items.Clear();
-            getGenre();
-            
+            List<Kategori> list = controller.GetAll();
+
+            if (!validering.NameInputValidate<string>(textBox1.Text, list))
+            {
+
+                MessageBox.Show("Kategorin finns redan, Vänligen skriv ett annat :)", "Felaktig Inmatning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+
+            else if (!validering.textInputsValidate(textBox1.Text))
+            {
+
+                MessageBox.Show("Endast bokstäver är tillåtna", "Felaktig Inmatning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+
+            else if (!validering.NullNotAcceptedValidateK(textBox1.Text))
+            {
+                MessageBox.Show("Fyll rutan!", "Felaktig Inmatning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+            }
+
+            else
+            {
+                string KategoriNamn = textBox1.Text;
+                controller.CreateKategori(KategoriNamn);
+                listBox1.Items.Clear();
+                getGenre();
+            }
         }
 
         private void getGenre()
@@ -54,18 +77,40 @@ namespace PL
 
     private void changeButton_Click_1(object sender, EventArgs e)
         {
-            object selectedItem = listBox1.SelectedItem;
-            Kategori andrarKategori = new Kategori(textBox1.Text);
-            if (selectedItem != null && textBox1.Text != null)
-            {
-                int selectedIndex = listBox1.SelectedIndex;
-                controller.Change(selectedIndex, andrarKategori);
+            List<Kategori> list = controller.GetAll();
 
-                listBox1.Items.Clear();
-                getGenre();
+            if (!validering.NameInputValidate<string>(textBox1.Text, list))
+            {
+
+                MessageBox.Show("Kategorin finns redan, Vänligen skriv ett annat :)", "Felaktig Inmatning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
-            else { 
-            //TODO: behöver valideras
+
+            else if (!validering.textInputsValidate(textBox1.Text))
+            {
+
+                MessageBox.Show("Endast bokstäver är tillåtna", "Felaktig Inmatning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+
+            else if (!validering.NullNotAcceptedValidateK(textBox1.Text))
+            {
+                MessageBox.Show("Fyll rutan!", "Felaktig Inmatning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+            }
+
+            else
+            {
+
+                object selectedItem = listBox1.SelectedItem;
+                Kategori andrarKategori = new Kategori(textBox1.Text);
+                if (selectedItem != null && textBox1.Text != null)
+                {
+                    int selectedIndex = listBox1.SelectedIndex;
+                    controller.Change(selectedIndex, andrarKategori);
+
+                    listBox1.Items.Clear();
+                    getGenre();
+                }
+
             }
         }
 
