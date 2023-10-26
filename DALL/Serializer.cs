@@ -1,8 +1,14 @@
 ﻿using Models;
 using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.IO.Pipes;
 using System.Net.Http;
+using System.Runtime;
+using System.Runtime.Remoting.Messaging;
+using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
@@ -31,7 +37,7 @@ namespace DAL
                                 sw.WriteLine(item.Genre);
 
                             }
-                          
+
                         }
 
                     }
@@ -106,8 +112,9 @@ namespace DAL
                                 poddTitel = item.Element("title")?.Value;
 
                             }
-                            foreach (XElement item in xmlDoc.Descendants("channel")) {
-                               string beskrivningen = item.Element("description")?.Value;
+                            foreach (XElement item in xmlDoc.Descendants("channel"))
+                            {
+                                string beskrivningen = item.Element("description")?.Value;
                                 beskrivning = beskrivningen.Replace(",", "");
                             }
                             Console.WriteLine(beskrivning);
@@ -126,13 +133,7 @@ namespace DAL
                             }
                             Kategori kategori = new Kategori("");
 
-                            podcast = new Podcast(antalAvsnitt, "", poddTitel, kategori, beskrivning);
-                            Console.WriteLine(poddTitel);
-                            podcast.avsnittLista = avsnittsLista;
-                            AvsnittSerialize(avsnittsLista);
-
-
-
+                            podcast = new Podcast(antalAvsnitt, "", poddTitel, kategori, beskrivning, avsnittsLista);
                         }
                     }
 
@@ -150,119 +151,138 @@ namespace DAL
 
             return podcast;
         }
-
-
+        
         public void PoddSerialize(List<Podcast> list)
         {
             try
             {
-                using (FileStream xmlOut =
-                    new FileStream("Podcast.txt", FileMode.Create, FileAccess.Write))
+                XmlSerializer xml = new XmlSerializer(list.GetType());
+                using (FileStream fs = new FileStream("Podcast.xml", FileMode.Create, FileAccess.Write))
                 {
-                    using (StreamWriter sw = new StreamWriter(xmlOut))
-                    {
-                        foreach (Podcast item in list)
-                        {
-                            if (item.Title != null && item.Namn != null && item.Kategori.Genre != null && item.AntalAvsnitt != 0)
-                            {
-                                sw.WriteLine(item.AntalAvsnitt + ", " + item.Namn + ", " + item.Title + ", " + item.Kategori.Genre + ", " + item.Beskrivning);
-                            }
-
-                        }
-
-                    }
+                    xml.Serialize(fs, list);
                 }
             }
-
-            catch (Exception e)
-
+            catch (Exception ex)
             {
-                Console.WriteLine(e.Message);
+                Debug.WriteLine(ex.Message);
             }
-
         }
+
+        //public void PoddSerialize(List<Podcast> list)
+        //{
+        //    try 
+
+        //    {
+                
+        //        string filePath = "Podcast.xml";
+
+        //        using (FileStream xmlOut = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+        //        {
+
+        //            XmlWriterSettings settings = new XmlWriterSettings
+        //            {
+        //                Indent = true,
+        //              IndentChars = "  ",
+        //              NewLineChars = "\n"   ,
+        //              NewLineHandling = NewLineHandling.Replace
+
+        //            };
+                 
+        //            using (XmlWriter writer = XmlWriter.Create(xmlOut, settings))
+        //            {
+
+        //                //if (writer.WriteStartDocument != null)
+
+        //                    writer.WriteStartDocument();
+        //                   writer.WriteStartElement("Podcast");
+        //                foreach (Podcast podd in list)
+        //                    {
+
+        //                    writer.WriteElementString("AntalAvsnitt", podd.AntalAvsnitt.ToString());
+        //                        writer.WriteElementString("Title", podd.Title);
+        //                        writer.WriteElementString("Kategori", podd.Kategori.Genre);
+        //                        writer.WriteElementString("Beskrivning", podd.Beskrivning);
+        //                        writer.WriteElementString("Namn", podd.Namn);
+
+        //                        writer.WriteStartElement("AvsnittsLista");
+        //                        foreach (Avsnitt avsnitt in podd.AvsnittsLista)
+        //                        {
+        //                            writer.WriteElementString("AvsnittTitle", avsnitt.Titel);
+        //                        }
+        //                        writer.WriteEndElement(); // AvsnittsLista
+
+        //                        // Avsluta Podcast-elementet.
+        //                        writer.WriteEndElement();
+        //                    // Avsluta rotelementet.
+
+        //                    // Avsluta dokumentet.
+        //                    writer.WriteEndDocument();
+        //                }
+                         
+
+        //            }
+
+
+        //            }
+
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Console.WriteLine(e.Message);
+        //    }
+
+        //}
+
+
 
         public List<Podcast> PoddDeserialize()
         {
-            List<Podcast> list = new List<Podcast>();
+            List<Podcast> podcastList = new List<Podcast>();
+
             try
             {
-                using (FileStream xmlIn =
-                    new FileStream("Podcast.txt", FileMode.Open, FileAccess.Read))
+                using (FileStream xmlIn = new FileStream("Podcast.xml", FileMode.Open, FileAccess.Read))
                 {
+                    XmlSerializer serializer = new XmlSerializer(typeof(Podcast));
+                    Podcast podd;
 
-                    using (StreamReader sr = new StreamReader(xmlIn))
+                    while (true)
                     {
-                        string line;
-                        while ((line = sr.ReadLine()) != null)
+                        try
                         {
-                            Podcast pod = new Podcast();
-                            string[] arg = line.Split(',');
-
-                            if (arg.Length == 5) {
-
-                                string antal = arg[0];
-                                pod.AntalAvsnitt = int.Parse(antal);
-                                pod.Namn = arg[1];
-                                pod.Title = arg[2];
-                                Kategori nyKategori = new Kategori(arg[3]);
-                                pod.Kategori = nyKategori;
-                                pod.Beskrivning = arg[4];
-                            }
-
-                            foreach (string arg2 in arg)
+                            podd = (Podcast)serializer.Deserialize(xmlIn);
+                            Console.WriteLine(podd.Beskrivning);
+                            podcastList.Add(podd);
+                            foreach (Podcast podden in podcastList)
                             {
-                                Console.WriteLine(arg2);
+                                foreach (Avsnitt avsnitt in podden.AvsnittsLista)
+                                {
+                                    Console.WriteLine("test" + avsnitt.Titel);
+                                }
                             }
-
-                            list.Add(pod);
                         }
-           
-                    }
-                }
-            }
-
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-
-            }
-            return list;
-        }
-
-
-
-        public List<Avsnitt> AvsnittSerialize(List<Avsnitt> list)
-        {
-            try
-            {
-                using (FileStream xmlOut =
-                    new FileStream("Avsnitt.txt", FileMode.Create, FileAccess.Write))
-                {
-                    using (StreamWriter sw = new StreamWriter(xmlOut))
-                    {
-                       foreach(Avsnitt avsnitt in list) {
-                            sw.WriteLine(avsnitt.Titel);
-
+                        catch (InvalidOperationException)
+                        {
+                            // När inget mer kan deserialiseras kommer Deserialize att kasta InvalidOperationException.
+                            // När detta händer, bryter vi ut ur loopen.
+                            break;
                         }
-
-
-
 
                     }
                 }
             }
-
             catch (Exception e)
-
             {
                 Console.WriteLine(e.Message);
             }
-            return list;
+
+
+            return podcastList;
         }
 
     }
 }
+
 
 
 

@@ -14,5 +14,6 @@ namespace Models
         {
             Genre = genre;
         }
+        public Kategori() { }
     }
 }

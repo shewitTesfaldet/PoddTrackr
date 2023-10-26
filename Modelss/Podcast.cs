@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Serialization;
 using static System.Net.WebRequestMethods;
 
 namespace Models
 {
+    [Serializable]
+    [XmlInclude(typeof(Podcast))]
+
     public class Podcast
     {
         public int AntalAvsnitt { get; set; }
@@ -13,15 +17,19 @@ namespace Models
         public Kategori Kategori { get; set; }
         public string Beskrivning { get; set; }
         public string Namn { get; set; }
-        public List<Avsnitt> avsnittLista;
-        
-        public Podcast(int antalAvsnitt, string namn, string title, Kategori kategori, string beskrivning ) {
+
+        [XmlArray("AvsnittsLista")]
+        [XmlArrayItem("AvsnittTitle")]
+        public List<Avsnitt> AvsnittsLista;
+
+
+        public Podcast(int antalAvsnitt, string namn, string title, Kategori kategori, string beskrivning, List<Avsnitt> avsnittsLista) {
             Title = title;
             Kategori = kategori;
             Beskrivning = beskrivning;
             AntalAvsnitt = antalAvsnitt;
             Namn = namn;
-            List<Avsnitt> avsnittLista = new List<Avsnitt>();
+            AvsnittsLista = avsnittsLista;
 
         }
 

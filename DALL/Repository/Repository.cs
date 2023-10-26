@@ -60,25 +60,6 @@ namespace DAL.Repository
 
         }
 
-        public List<Avsnitt> GetAllAvsnitt()
-        {
-            List<Avsnitt> aList = new List<Avsnitt>();
-
-            try
-            {
-                aList = serializer.AvsnittSerialize(aList);
-
-
-            }
-
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-
-            }
-            return aList;
-
-        }
         public void SaveChanges()
         {
             serializer.PoddSerialize(list);
@@ -95,8 +76,6 @@ namespace DAL.Repository
             try
             {
                 enPodcast = serializer.desiralized(url);
-
-
             }
 
             catch (Exception e)
@@ -106,8 +85,9 @@ namespace DAL.Repository
             }
 
             return enPodcast;
+
         }
 
-      
+
     }
 }

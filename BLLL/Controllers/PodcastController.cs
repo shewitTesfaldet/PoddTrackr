@@ -13,10 +13,11 @@ namespace BLL.Controllers
     {
         IRepository<Podcast> Repository;
 
-        public PodcastController() {
+        public PodcastController()
+        {
 
             Repository = new Repository();
-      
+
         }
         public void Change(int index, Podcast podcast)
         {
@@ -37,37 +38,26 @@ namespace BLL.Controllers
             return enpodcast;
         }
 
-        public List<Podcast> GetAll() { 
-            
-            List <Podcast> list= Repository.GetAll();
-            return list; 
-        }
-
-        public List<Avsnitt> GetAllAvsnitt()
+        public List<Podcast> GetAll()
         {
 
-            List<Avsnitt> list = Repository.GetAllAvsnitt();
+            List<Podcast> list = Repository.GetAll();
             return list;
         }
 
 
-        public void Delete(string name)
+        public void Delete(int index)
         {
 
-            List<Kategori> list = new List<Kategori>();
-            //list = Repository.GetAll();
+            List<Podcast> podcastList = Repository.GetAll();
 
-            foreach (Kategori item in list)
+            if (index >= 0 && index < podcastList.Count)
             {
-                if (item.Genre.Equals(name))
-                {
-
-                    int index = GetIndex(name);
-                    Repository.Delete(index);
-
-                }
+                Repository.Delete(index);
             }
         }
+
+
 
 
         private int GetIndex(string name)
