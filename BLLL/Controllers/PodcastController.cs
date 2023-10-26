@@ -45,13 +45,6 @@ namespace BLL.Controllers
             return list;
         }
 
-        public List<Avsnitt> GetAllAvsnitt()
-        {
-
-            List<Avsnitt> list = Repository.GetAllAvsnitt();
-            return list;
-        }
-
 
         public void Delete(int index)
         {

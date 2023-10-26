@@ -1,8 +1,12 @@
 ﻿using Models;
 using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Pipes;
 using System.Net.Http;
+using System.Runtime;
+using System.Runtime.Remoting.Messaging;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
@@ -31,7 +35,7 @@ namespace DAL
                                 sw.WriteLine(item.Genre);
 
                             }
-                          
+
                         }
 
                     }
@@ -106,8 +110,9 @@ namespace DAL
                                 poddTitel = item.Element("title")?.Value;
 
                             }
-                            foreach (XElement item in xmlDoc.Descendants("channel")) {
-                               string beskrivningen = item.Element("description")?.Value;
+                            foreach (XElement item in xmlDoc.Descendants("channel"))
+                            {
+                                string beskrivningen = item.Element("description")?.Value;
                                 beskrivning = beskrivningen.Replace(",", "");
                             }
                             Console.WriteLine(beskrivning);
@@ -126,13 +131,7 @@ namespace DAL
                             }
                             Kategori kategori = new Kategori("");
 
-                            podcast = new Podcast(antalAvsnitt, "", poddTitel, kategori, beskrivning);
-                            Console.WriteLine(poddTitel);
-                            podcast.avsnittLista = avsnittsLista;
-                            AvsnittSerialize(avsnittsLista);
-
-
-
+                            podcast = new Podcast(antalAvsnitt, "", poddTitel, kategori, beskrivning, avsnittsLista);
                         }
                     }
 
@@ -156,113 +155,100 @@ namespace DAL
         {
             try
             {
-                using (FileStream xmlOut =
-                    new FileStream("Podcast.txt", FileMode.Create, FileAccess.Write))
+                using (FileStream xmlOut = new FileStream("Podcast.xml", FileMode.Append, FileAccess.Write))
                 {
-                    using (StreamWriter sw = new StreamWriter(xmlOut))
+                    XmlWriterSettings settings = new XmlWriterSettings
                     {
-                        foreach (Podcast item in list)
-                        {
-                            if (item.Title != null && item.Namn != null && item.Kategori.Genre != null && item.AntalAvsnitt != 0)
-                            {
-                                sw.WriteLine(item.AntalAvsnitt + ", " + item.Namn + ", " + item.Title + ", " + item.Kategori.Genre + ", " + item.Beskrivning);
-                            }
+                        Indent = true
+                    };
 
+                    using (XmlWriter writer = XmlWriter.Create(xmlOut, settings))
+                    {
+                       writer.WriteStartDocument();
+
+                        foreach (Podcast podd in list)
+                        {
+                            writer.WriteStartElement("Podcast");
+
+                            writer.WriteElementString("AntalAvsnitt", podd.AntalAvsnitt.ToString());
+                            writer.WriteElementString("Title", podd.Title);
+                            writer.WriteElementString("Kategori", podd.Kategori.Genre);
+                            writer.WriteElementString("Beskrivning", podd.Beskrivning);
+                            writer.WriteElementString("Namn", podd.Namn);
+
+                            writer.WriteStartElement("AvsnittsLista");
+                            foreach (Avsnitt avsnitt in podd.AvsnittsLista)
+                            {
+                                writer.WriteElementString("AvsnittTitle", avsnitt.Titel);
+                            }
+                            writer.WriteEndElement(); // AvsnittsLista
+
+                            // Avsluta Podcast-elementet.
+                            writer.WriteEndElement();
                         }
 
+                        // Avsluta rotelementet.
+                        writer.WriteEndElement();
+
+                        // Avsluta dokumentet.
+                        writer.WriteEndDocument();
                     }
                 }
             }
-
             catch (Exception e)
-
             {
                 Console.WriteLine(e.Message);
             }
 
         }
+
+    
 
         public List<Podcast> PoddDeserialize()
         {
-            List<Podcast> list = new List<Podcast>();
+            List<Podcast> podcastList = new List<Podcast>();
+
             try
             {
-                using (FileStream xmlIn =
-                    new FileStream("Podcast.txt", FileMode.Open, FileAccess.Read))
+                using (FileStream xmlIn = new FileStream("Podcast.xml", FileMode.Open, FileAccess.Read))
                 {
+                    XmlSerializer serializer = new XmlSerializer(typeof(Podcast));
+                    Podcast podd;
 
-                    using (StreamReader sr = new StreamReader(xmlIn))
+                    while (true)
                     {
-                        string line;
-                        while ((line = sr.ReadLine()) != null)
+                        try
                         {
-                            Podcast pod = new Podcast();
-                            string[] arg = line.Split(',');
-
-                            if (arg.Length == 5) {
-
-                                string antal = arg[0];
-                                pod.AntalAvsnitt = int.Parse(antal);
-                                pod.Namn = arg[1];
-                                pod.Title = arg[2];
-                                Kategori nyKategori = new Kategori(arg[3]);
-                                pod.Kategori = nyKategori;
-                                pod.Beskrivning = arg[4];
+                            podd = (Podcast)serializer.Deserialize(xmlIn);
+                            Console.WriteLine(podd.Beskrivning);
+                            podcastList.Add(podd);
+                            foreach (Podcast podden in podcastList) {
+                                foreach (Avsnitt avsnitt in podden.AvsnittsLista) {
+                                    Console.WriteLine("test" + avsnitt.Titel);
+                                }
                             }
-
-                            foreach (string arg2 in arg)
-                            {
-                                Console.WriteLine(arg2);
-                            }
-
-                            list.Add(pod);
                         }
+                        catch (InvalidOperationException)
+                        {
+                            // När inget mer kan deserialiseras kommer Deserialize att kasta InvalidOperationException.
+                            // När detta händer, bryter vi ut ur loopen.
+                            break;
+                        }
+
+                    }
+            }}
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
            
-                    }
-                }
-            }
-
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-
-            }
-            return list;
-        }
-
-
-
-        public List<Avsnitt> AvsnittSerialize(List<Avsnitt> list)
-        {
-            try
-            {
-                using (FileStream xmlOut =
-                    new FileStream("Avsnitt.txt", FileMode.Create, FileAccess.Write))
-                {
-                    using (StreamWriter sw = new StreamWriter(xmlOut))
-                    {
-                       foreach(Avsnitt avsnitt in list) {
-                            sw.WriteLine(avsnitt.Titel);
-
-                        }
-
-
-
-
-                    }
-                }
-            }
-
-            catch (Exception e)
-
-            {
-                Console.WriteLine(e.Message);
-            }
-            return list;
+            return podcastList;
         }
 
     }
 }
+
 
 
 

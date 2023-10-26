@@ -37,7 +37,8 @@ namespace PL
         {
             foreach (Podcast item in podcastController.GetAll())
             {
-                listBoxPoddar.Items.Add(item.AntalAvsnitt + " " + item.Title + " " + item.Namn);
+
+                listBoxPoddar.Items.Add(item.AntalAvsnitt + " " + item.Title + " " + item.Namn + " " + item.Kategori.Genre);
 
             }
         }
@@ -65,12 +66,12 @@ namespace PL
 
             listBoxInfo.Items.Add(enPodcast.Beskrivning);
 
-            foreach (Avsnitt avsnitt in enPodcast.avsnittLista)
+            foreach (Avsnitt avsnitt in enPodcast.AvsnittsLista)
             {
                 listBoxAvsnitt.Items.Add(avsnitt.Titel);
             }
 
-            listBoxPoddar.Items.Add(enPodcast.AntalAvsnitt + " " + enPodcast.Title  + " " + Namn + " " + enPodcast.Kategori.Genre);
+            listBoxPoddar.Items.Add(enPodcast.AntalAvsnitt + " " + enPodcast.Title + " " + Namn + " " + enPodcast.Kategori.Genre);
             podcastController.CreatePodcast(enPodcast);
         }
 
@@ -119,7 +120,7 @@ namespace PL
             if (selectedItem != null && !nyNamn.Equals(null) && !nyKategori.Equals(null))
             {
                 //Podcast object för repo -> Podcast.txt
-                Podcast nyPodcast = new Podcast(enPodcast.AntalAvsnitt, nyNamn, enPodcast.Title, nyKategori, enPodcast.Beskrivning  );
+                Podcast nyPodcast = new Podcast(enPodcast.AntalAvsnitt, nyNamn, enPodcast.Title, nyKategori, enPodcast.Beskrivning, enPodcast.AvsnittsLista);
                 int selectedIndex = listBoxPoddar.SelectedIndex;
                 podcastController.Change(selectedIndex, nyPodcast);
 
@@ -129,14 +130,14 @@ namespace PL
 
                 //Lokal object för listboxPoddar i string/int
                 object nyPodd = enPodcast.AntalAvsnitt + " " + enPodcast.Title + " " + nyNamn + " " + CBKategori.Text;
-              
-                    listBoxPoddar.Items.Insert(selectedIndex, nyPodd);
+
+                listBoxPoddar.Items.Insert(selectedIndex, nyPodd);
 
                 //Problem uppstår pga att "Presistent" data inte finns i programmet, leder till tomma objekt vid omstart!!!
 
 
             }
-      
+
 
 
         }
@@ -145,25 +146,25 @@ namespace PL
         {
             int selectedIndex = listBoxPoddar.SelectedIndex;
             List<Podcast> allaPoddar = podcastController.GetAll();
-           
-                if (selectedIndex <= allaPoddar.Count && selectedIndex >= 0)
-                {
-                
-                    Podcast podd = allaPoddar[selectedIndex];
-                    listBoxAvsnitt.Items.Clear();
-                    listBoxInfo.Items.Clear();
-                    listBoxInfo.Items.Add(podd.Beskrivning);
-                //List<Avsnitt> nyLista = podd.avsnittLista.Where(avsnitt => avsnitt != null)
-                //    .ToList();
 
-                //foreach (var avsnitt in nyLista)
-                //{
-                //    listBoxAvsnitt.Items.Add(avsnitt); // Antag att du vill lägga till avsnitten i listBoxAvsnitt.
-                //}
+            if (selectedIndex <= allaPoddar.Count && selectedIndex >= 0)
+            {
+
+                Podcast podd = allaPoddar[selectedIndex];
+                listBoxAvsnitt.Items.Clear();
+                listBoxInfo.Items.Clear();
+                listBoxInfo.Items.Add(podd.Beskrivning);
+                Console.WriteLine(podd.AvsnittsLista.Count);
+                foreach (Avsnitt avsnitt in podd.AvsnittsLista)
+                {
+                    listBoxAvsnitt.Items.Add(avsnitt);
+                    Console.WriteLine(avsnitt);
+
+                }
 
 
             }
-           
+
 
 
         }
