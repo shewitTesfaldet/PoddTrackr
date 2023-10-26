@@ -213,15 +213,11 @@ namespace PL
                 }
             }
             }
-           
-
-
-        }
 
         private void CBKategori1_SelectedIndexChanged(object sender, EventArgs e)
         {
             List<Podcast> podcasts = podcastController.GetAll();
-         
+
             object selectedItem = CBKategori1.SelectedItem;
 
             if (selectedItem != null && selectedItem is string selectedCategory)
@@ -230,6 +226,8 @@ namespace PL
                 listBoxPoddar.Items.Clear();
                 listBoxPoddar.Items.AddRange(filteredPodcasts.Select(p => p.Kategori).ToArray());
             }
+
         }
     }
+
 }
