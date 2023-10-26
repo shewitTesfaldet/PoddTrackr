@@ -15,11 +15,9 @@ namespace DAL.Repository
 
         List<T> GetAll();
 
-      
         void SaveChanges();
 
         Podcast GetPodcast(string url);
         int GetIndexName(string name);
-        List<Avsnitt> GetAllAvsnitt();
     }
 }
