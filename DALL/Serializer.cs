@@ -2,11 +2,13 @@
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Pipes;
 using System.Net.Http;
 using System.Runtime;
 using System.Runtime.Remoting.Messaging;
+using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
@@ -149,60 +151,89 @@ namespace DAL
 
             return podcast;
         }
-
-
+        
         public void PoddSerialize(List<Podcast> list)
         {
             try
             {
-                using (FileStream xmlOut = new FileStream("Podcast.xml", FileMode.Append, FileAccess.Write))
+                XmlSerializer xml = new XmlSerializer(list.GetType());
+                using (FileStream fs = new FileStream("Podcast.xml", FileMode.Create, FileAccess.Write))
                 {
-                    XmlWriterSettings settings = new XmlWriterSettings
-                    {
-                        Indent = true
-                    };
-
-                    using (XmlWriter writer = XmlWriter.Create(xmlOut, settings))
-                    {
-                       writer.WriteStartDocument();
-
-                        foreach (Podcast podd in list)
-                        {
-                            writer.WriteStartElement("Podcast");
-
-                            writer.WriteElementString("AntalAvsnitt", podd.AntalAvsnitt.ToString());
-                            writer.WriteElementString("Title", podd.Title);
-                            writer.WriteElementString("Kategori", podd.Kategori.Genre);
-                            writer.WriteElementString("Beskrivning", podd.Beskrivning);
-                            writer.WriteElementString("Namn", podd.Namn);
-
-                            writer.WriteStartElement("AvsnittsLista");
-                            foreach (Avsnitt avsnitt in podd.AvsnittsLista)
-                            {
-                                writer.WriteElementString("AvsnittTitle", avsnitt.Titel);
-                            }
-                            writer.WriteEndElement(); // AvsnittsLista
-
-                            // Avsluta Podcast-elementet.
-                            writer.WriteEndElement();
-                        }
-
-                        // Avsluta rotelementet.
-                        writer.WriteEndElement();
-
-                        // Avsluta dokumentet.
-                        writer.WriteEndDocument();
-                    }
+                    xml.Serialize(fs, list);
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e.Message);
+                Debug.WriteLine(ex.Message);
             }
-
         }
 
-    
+        //public void PoddSerialize(List<Podcast> list)
+        //{
+        //    try 
+
+        //    {
+                
+        //        string filePath = "Podcast.xml";
+
+        //        using (FileStream xmlOut = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+        //        {
+
+        //            XmlWriterSettings settings = new XmlWriterSettings
+        //            {
+        //                Indent = true,
+        //              IndentChars = "  ",
+        //              NewLineChars = "\n"   ,
+        //              NewLineHandling = NewLineHandling.Replace
+
+        //            };
+                 
+        //            using (XmlWriter writer = XmlWriter.Create(xmlOut, settings))
+        //            {
+
+        //                //if (writer.WriteStartDocument != null)
+
+        //                    writer.WriteStartDocument();
+        //                   writer.WriteStartElement("Podcast");
+        //                foreach (Podcast podd in list)
+        //                    {
+
+        //                    writer.WriteElementString("AntalAvsnitt", podd.AntalAvsnitt.ToString());
+        //                        writer.WriteElementString("Title", podd.Title);
+        //                        writer.WriteElementString("Kategori", podd.Kategori.Genre);
+        //                        writer.WriteElementString("Beskrivning", podd.Beskrivning);
+        //                        writer.WriteElementString("Namn", podd.Namn);
+
+        //                        writer.WriteStartElement("AvsnittsLista");
+        //                        foreach (Avsnitt avsnitt in podd.AvsnittsLista)
+        //                        {
+        //                            writer.WriteElementString("AvsnittTitle", avsnitt.Titel);
+        //                        }
+        //                        writer.WriteEndElement(); // AvsnittsLista
+
+        //                        // Avsluta Podcast-elementet.
+        //                        writer.WriteEndElement();
+        //                    // Avsluta rotelementet.
+
+        //                    // Avsluta dokumentet.
+        //                    writer.WriteEndDocument();
+        //                }
+                         
+
+        //            }
+
+
+        //            }
+
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Console.WriteLine(e.Message);
+        //    }
+
+        //}
+
+
 
         public List<Podcast> PoddDeserialize()
         {
@@ -222,8 +253,10 @@ namespace DAL
                             podd = (Podcast)serializer.Deserialize(xmlIn);
                             Console.WriteLine(podd.Beskrivning);
                             podcastList.Add(podd);
-                            foreach (Podcast podden in podcastList) {
-                                foreach (Avsnitt avsnitt in podden.AvsnittsLista) {
+                            foreach (Podcast podden in podcastList)
+                            {
+                                foreach (Avsnitt avsnitt in podden.AvsnittsLista)
+                                {
                                     Console.WriteLine("test" + avsnitt.Titel);
                                 }
                             }
@@ -236,13 +269,14 @@ namespace DAL
                         }
 
                     }
-            }}
+                }
+            }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
 
-           
+
             return podcastList;
         }
 
