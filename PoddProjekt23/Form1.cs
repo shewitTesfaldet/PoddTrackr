@@ -51,7 +51,7 @@ namespace PL
             if (!validering.NameInputValidate<string>(textBoxUrl.Text, list))
             {
 
-                MessageBox.Show("Namnet finns redan, Vänligen skriv ett annat :)", "Felaktig Inmatning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Podden finns redan, Vänligen skriv ett annat :)", "Felaktig Inmatning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
 
             //else if (!validering.textInputsValidate(txtNamn.Text))
@@ -128,6 +128,7 @@ namespace PL
                 if (item.Genre != null)
                 {
                     CBKategori.Items.Add(item.Genre);
+                    CBKategori1.Items.Add(item.Genre); 
 
                 }
             }
@@ -184,6 +185,20 @@ namespace PL
            
 
 
+        }
+
+        private void CBKategori1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            List<Podcast> podcasts = podcastController.GetAll();
+         
+            object selectedItem = CBKategori1.SelectedItem;
+
+            if (selectedItem != null && selectedItem is string selectedCategory)
+            {
+                var filteredPodcasts = podcasts.Where(p => p.Kategori.Genre == selectedCategory).ToList();
+                listBoxPoddar.Items.Clear();
+                listBoxPoddar.Items.AddRange(filteredPodcasts.Select(p => p.Kategori).ToArray());
+            }
         }
     }
 }

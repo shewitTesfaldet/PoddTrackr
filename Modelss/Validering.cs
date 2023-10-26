@@ -28,9 +28,14 @@ namespace Modelss
 
         public bool NameInputValidate<T>(string input, List<Podcast> list)
         {
-            List<string> kategorinamn = list.Select(k => k.Namn).ToList();
-            return !kategorinamn.Contains(input);
+            List<string> podcast = list.Select(k => k.Namn).ToList();
+            return !podcast.Contains(input);
         }
+
+        //public bool NameInputValidate<T>(string input, List<Podcast> list)
+        //{
+        //    return !list.Any(podcast => string.Equals(podcast.GetFullStringRepresentation(), input, StringComparison.OrdinalIgnoreCase));
+        //}
 
 
 
