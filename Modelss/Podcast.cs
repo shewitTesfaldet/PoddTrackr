@@ -7,6 +7,8 @@ using static System.Net.WebRequestMethods;
 namespace Models
 {
     [Serializable]
+    [XmlInclude(typeof(Podcast))]
+
     public class Podcast
     {
         public int AntalAvsnitt { get; set; }

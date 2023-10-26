@@ -76,7 +76,6 @@ namespace DAL.Repository
             try
             {
                 enPodcast = serializer.desiralized(url);
-
             }
 
             catch (Exception e)
@@ -86,8 +85,9 @@ namespace DAL.Repository
             }
 
             return enPodcast;
+
         }
 
-      
+
     }
 }
