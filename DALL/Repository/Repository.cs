@@ -21,6 +21,7 @@ namespace DAL.Repository
 
         public void Create(Podcast entity)
         {
+            list = GetAll(); 
             list.Add(entity);
             SaveChanges();
         }
@@ -62,7 +63,6 @@ namespace DAL.Repository
         public void SaveChanges()
         {
             serializer.PoddSerialize(list);
-            Console.WriteLine(list.Count);
         }
 
         public void Update(int index, Podcast entity)

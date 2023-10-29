@@ -8,6 +8,8 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Linq;
 using BLL;
 using BLL.Controllers;
 using Models;
@@ -219,7 +221,7 @@ namespace PL
             {
                 var filteredPodcasts = podcasts.Where(p => p.Kategori.Genre.Equals(selectedCategory)).ToList();
                 listBoxPoddar.Items.Clear();
-                listBoxPoddar.Items.AddRange(filteredPodcasts.Select(p => p.Kategori.Genre).ToArray());
+                listBoxPoddar.Items.AddRange(filteredPodcasts.Select(p => p.Title).ToArray());
             }
 
         }
