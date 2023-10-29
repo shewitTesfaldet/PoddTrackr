@@ -12,7 +12,7 @@ namespace DAL.Repository
     public class Repository : IRepository<Podcast>
     {
         List<Podcast> list = new List<Podcast>();
-
+        
 
         Serializer serializer = new Serializer();
 
@@ -21,6 +21,7 @@ namespace DAL.Repository
 
         public void Create(Podcast entity)
         {
+            list = GetAll(); 
             list.Add(entity);
             SaveChanges();
         }
