@@ -8,6 +8,8 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Linq;
 using BLL;
 using BLL.Controllers;
 using Models;
@@ -19,7 +21,8 @@ namespace PL
 
 {
     public partial class Form1 : Form
-    {  Validering validering= new Validering();
+    {
+        Validering validering = new Validering();
         PodcastController podcastController;
         KategoriController kategoriController;
         Podcast enPodcast = null;
@@ -47,7 +50,7 @@ namespace PL
         private void buttonKategori_Click(object sender, EventArgs e)
         {
 
-            List<Podcast> list = podcastController.GetAll();    
+            List<Podcast> list = podcastController.GetAll();
 
             if (!validering.NameInputValidate<string>(textBoxUrl.Text, list))
             {
@@ -73,8 +76,8 @@ namespace PL
                 listBoxAvsnitt.Items.Clear();
                 string url = textBoxUrl.Text;
 
-            enPodcast = podcastController.GetPodcast(url);
-            //txtNamn.Text = enPodcast?.Title;
+                enPodcast = podcastController.GetPodcast(url);
+                //txtNamn.Text = enPodcast?.Title;
 
                 string kategori = CBKategori.Text;
 
@@ -90,16 +93,16 @@ namespace PL
 
                 listBoxInfo.Items.Add(enPodcast.Beskrivning);
 
-            foreach (Avsnitt avsnitt in enPodcast.AvsnittsLista)
-            {
-                listBoxAvsnitt.Items.Add(avsnitt.Titel);
+                foreach (Avsnitt avsnitt in enPodcast.AvsnittsLista)
+                {
+                    listBoxAvsnitt.Items.Add(avsnitt.Titel);
+                }
+
+                listBoxPoddar.Items.Add(enPodcast.AntalAvsnitt + " " + enPodcast.Title + " " + Namn + " " + enPodcast.Kategori.Genre);
+                podcastController.CreatePodcast(enPodcast);
             }
 
-            listBoxPoddar.Items.Add(enPodcast.AntalAvsnitt + " " + enPodcast.Title + " " + Namn + " " + enPodcast.Kategori.Genre);
-            podcastController.CreatePodcast(enPodcast);
-        }
 
-          
         }
 
 
@@ -127,7 +130,7 @@ namespace PL
                 if (item.Genre != null)
                 {
                     CBKategori.Items.Add(item.Genre);
-                    CBKategori1.Items.Add(item.Genre); 
+                    CBKategori1.Items.Add(item.Genre);
 
                 }
             }
@@ -189,14 +192,9 @@ namespace PL
                     Console.WriteLine(avsnitt);
 
                 }
-
-
             }
-            
-
-
-
         }
+      
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
@@ -212,7 +210,7 @@ namespace PL
                     listBoxPoddar.Items.RemoveAt(selectedIndex);
                 }
             }
-            }
+        }
 
         private void CBKategori1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -224,7 +222,7 @@ namespace PL
             {
                 var filteredPodcasts = podcasts.Where(p => p.Kategori.Genre == selectedCategory).ToList();
                 listBoxPoddar.Items.Clear();
-                listBoxPoddar.Items.AddRange(filteredPodcasts.Select(p => p.Kategori).ToArray());
+                listBoxPoddar.Items.AddRange(filteredPodcasts.Select(p => p.Title).ToArray());
             }
 
         }
