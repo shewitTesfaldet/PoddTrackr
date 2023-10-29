@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,6 @@ namespace DAL.Repository
     public class Repository : IRepository<Podcast>
     {
         List<Podcast> list = new List<Podcast>();
-
 
         Serializer serializer = new Serializer();
 
@@ -37,7 +37,6 @@ namespace DAL.Repository
             {
                 list.RemoveAt(index);
                 SaveChanges();
-
             }
 
         }
@@ -63,6 +62,7 @@ namespace DAL.Repository
         public void SaveChanges()
         {
             serializer.PoddSerialize(list);
+            Console.WriteLine(list.Count);
         }
 
         public void Update(int index, Podcast entity)

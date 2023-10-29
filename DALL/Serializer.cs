@@ -112,20 +112,16 @@ namespace DAL
                                 poddTitel = item.Element("title")?.Value;
 
                             }
-                            foreach (XElement item in xmlDoc.Descendants("channel"))
-                            {
-                                string beskrivningen = item.Element("description")?.Value;
-                                beskrivning = beskrivningen.Replace(",", "");
-                            }
-                            Console.WriteLine(beskrivning);
+                           
                             foreach (XElement item in xmlDoc.Descendants("item"))
                             {
                                 title = item.Element("title")?.Value;
+                                string beskrivningen = item.Element("description")?.Value;
 
 
                                 if (!string.IsNullOrEmpty(title))
                                 {
-                                    Avsnitt avsnitt = new Avsnitt(title);
+                                    Avsnitt avsnitt = new Avsnitt(title, beskrivningen);
                                     avsnittsLista.Add(avsnitt);
                                     antalAvsnitt++;
                                 }
@@ -133,7 +129,7 @@ namespace DAL
                             }
                             Kategori kategori = new Kategori("");
 
-                            podcast = new Podcast(antalAvsnitt, "", poddTitel, kategori, beskrivning, avsnittsLista);
+                            podcast = new Podcast(antalAvsnitt, "", poddTitel, kategori, avsnittsLista);
                         }
                     }
 
@@ -251,7 +247,6 @@ namespace DAL
                         try
                         {
                             podd = (Podcast)serializer.Deserialize(xmlIn);
-                            Console.WriteLine(podd.Beskrivning);
                             podcastList.Add(podd);
                             foreach (Podcast podden in podcastList)
                             {

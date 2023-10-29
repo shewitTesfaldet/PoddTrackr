@@ -36,7 +36,7 @@ namespace PL
         {
             List<Kategori> list = controller.GetAll();
 
-            if (!validering.NameInputValidate<string>(textBox1.Text, list))
+            if (!validering.NameInputValidate(textBox1.Text, list))
             {
 
                 MessageBox.Show("Kategorin finns redan, Vänligen skriv ett annat :)", "Felaktig Inmatning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -79,7 +79,7 @@ namespace PL
         {
             List<Kategori> list = controller.GetAll();
 
-            if (!validering.NameInputValidate<string>(textBox1.Text, list))
+            if (!validering.NameInputValidate(textBox1.Text, list))
             {
 
                 MessageBox.Show("Kategorin finns redan, Vänligen skriv ett annat :)", "Felaktig Inmatning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);

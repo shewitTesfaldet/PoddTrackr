@@ -7,26 +7,22 @@ using static System.Net.WebRequestMethods;
 namespace Models
 {
     [Serializable]
-    [XmlInclude(typeof(Podcast))]
-
     public class Podcast
     {
         public int AntalAvsnitt { get; set; }
 
         public string Title { get; set; }
         public Kategori Kategori { get; set; }
-        public string Beskrivning { get; set; }
         public string Namn { get; set; }
 
-        [XmlArray("AvsnittsLista")]
-        [XmlArrayItem("AvsnittTitle")]
+        //[XmlArray("AvsnittsLista")]
+        //[XmlArrayItem("AvsnittTitle")]
         public List<Avsnitt> AvsnittsLista;
 
 
-        public Podcast(int antalAvsnitt, string namn, string title, Kategori kategori, string beskrivning, List<Avsnitt> avsnittsLista) {
+        public Podcast(int antalAvsnitt, string namn, string title, Kategori kategori, List<Avsnitt> avsnittsLista) {
             Title = title;
             Kategori = kategori;
-            Beskrivning = beskrivning;
             AntalAvsnitt = antalAvsnitt;
             Namn = namn;
             AvsnittsLista = avsnittsLista;
