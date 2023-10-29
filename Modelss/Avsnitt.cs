@@ -9,10 +9,12 @@ namespace Models
     public class Avsnitt
     {
         public string Titel { get; set; }
-        public Avsnitt(string titel)
+
+        public string Beskrivning { get; set; }
+        public Avsnitt(string titel, string beskrivning)
         {
             Titel = titel;
-
+            Beskrivning = beskrivning;  
         }
 
         public Avsnitt() { }

@@ -19,46 +19,28 @@ namespace Modelss
         }
 
 
-        public bool NameInputValidate<T>(string input, List<Kategori> list)
+        public bool NameInputValidate(string input, List<Kategori> list)
         {
             List<string> kategorinamn = list.Select(k => k.Genre).ToList();
             return !kategorinamn.Contains(input);
         }
 
-
-        public bool NameInputValidate<T>(string input, List<Podcast> list)
+        //fungerar inte när man skriver in samma podcast flera gånger
+        public bool NameInputValidate(string input, List<Podcast> list)
         {
-            List<string> podcast = list.Select(k => k.Namn).ToList();
+            List<string> podcast = list.Select(p => p.Namn).ToList();
             return !podcast.Contains(input);
         }
-
-        //public bool NameInputValidate<T>(string input, List<Podcast> list)
-        //{
-        //    return !list.Any(podcast => string.Equals(podcast.GetFullStringRepresentation(), input, StringComparison.OrdinalIgnoreCase));
-        //}
-
-
 
 
         public bool NullNotAcceptedValidate(string input, string input1, string input2)
         {
-            if (string.IsNullOrEmpty(input))
+            if (string.IsNullOrWhiteSpace(input) || string.IsNullOrEmpty(input1) || string.IsNullOrEmpty(input2))
+            {
+                return false;
+            }
+            return true;
 
-            {
-                return false;
-            }
-            else if(string.IsNullOrEmpty(input1))
-            {return false;
-            }
-            else if (string.IsNullOrEmpty(input2))
-            {
-                return false;
-            }
-            else
-            {
-                // Do something with the input
-                return true;
-            }
         }
 
         public bool NullNotAcceptedValidateK(string input)
@@ -69,7 +51,6 @@ namespace Modelss
             }
             else
             {
-                // Do something with the input
                 return true;
             }
         }
