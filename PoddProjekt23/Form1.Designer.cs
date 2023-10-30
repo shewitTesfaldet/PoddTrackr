@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.textBoxUrl = new System.Windows.Forms.TextBox();
             this.CBKategori = new System.Windows.Forms.ComboBox();
-            this.listBoxInfo = new System.Windows.Forms.ListBox();
             this.listBoxAvsnitt = new System.Windows.Forms.ListBox();
             this.listBoxPoddar = new System.Windows.Forms.ListBox();
             this.buttonKategori = new System.Windows.Forms.Button();
@@ -41,6 +40,7 @@
             this.btnChange = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.CBKategori1 = new System.Windows.Forms.ComboBox();
+            this.listBoxInfo = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // textBoxUrl
@@ -59,15 +59,6 @@
             this.CBKategori.Name = "CBKategori";
             this.CBKategori.Size = new System.Drawing.Size(113, 21);
             this.CBKategori.TabIndex = 7;
-            // 
-            // listBoxInfo
-            // 
-            this.listBoxInfo.FormattingEnabled = true;
-            this.listBoxInfo.Location = new System.Drawing.Point(506, 188);
-            this.listBoxInfo.Margin = new System.Windows.Forms.Padding(2);
-            this.listBoxInfo.Name = "listBoxInfo";
-            this.listBoxInfo.Size = new System.Drawing.Size(422, 160);
-            this.listBoxInfo.TabIndex = 9;
             // 
             // listBoxAvsnitt
             // 
@@ -169,6 +160,7 @@
             this.btnDelete.TabIndex = 19;
             this.btnDelete.Text = "Ta bort";
             this.btnDelete.UseVisualStyleBackColor = false;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click_1);
             // 
             // CBKategori1
             // 
@@ -179,13 +171,22 @@
             this.CBKategori1.TabIndex = 21;
             this.CBKategori1.SelectedIndexChanged += new System.EventHandler(this.CBKategori1_SelectedIndexChanged);
             // 
+            // listBoxInfo
+            // 
+            this.listBoxInfo.Location = new System.Drawing.Point(523, 195);
+            this.listBoxInfo.Multiline = true;
+            this.listBoxInfo.Name = "listBoxInfo";
+            this.listBoxInfo.Size = new System.Drawing.Size(422, 151);
+            this.listBoxInfo.TabIndex = 23;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(1031, 988);
+            this.ClientSize = new System.Drawing.Size(977, 967);
+            this.Controls.Add(this.listBoxInfo);
             this.Controls.Add(this.CBKategori1);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnChange);
@@ -195,7 +196,6 @@
             this.Controls.Add(this.buttonKategori);
             this.Controls.Add(this.listBoxPoddar);
             this.Controls.Add(this.listBoxAvsnitt);
-            this.Controls.Add(this.listBoxInfo);
             this.Controls.Add(this.CBKategori);
             this.Controls.Add(this.textBoxUrl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -211,7 +211,6 @@
 
         private System.Windows.Forms.TextBox textBoxUrl;
         private System.Windows.Forms.ComboBox CBKategori;
-        private System.Windows.Forms.ListBox listBoxInfo;
         private System.Windows.Forms.ListBox listBoxAvsnitt;
         private System.Windows.Forms.ListBox listBoxPoddar;
         private System.Windows.Forms.Button buttonKategori;
@@ -221,6 +220,7 @@
         private System.Windows.Forms.Button btnChange;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.ComboBox CBKategori1;
+        private System.Windows.Forms.TextBox listBoxInfo;
     }
 }
 

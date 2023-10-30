@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Models;
 
 namespace Modelss
@@ -12,11 +14,10 @@ namespace Modelss
 
         public bool textInputsValidate(string input)
         {
-            // Kontrollera om inmatningen endast innehåller bokstäver
-
-            return input.All(c => char.IsLetter(c));
-
+  
+            return input.All(c => char.IsLetter(c) || char.IsWhiteSpace(c));
         }
+
 
 
         public bool NameInputValidate(string input, List<Kategori> list)
@@ -25,10 +26,9 @@ namespace Modelss
             return !kategorinamn.Contains(input);
         }
 
-        //fungerar inte när man skriver in samma podcast flera gånger
         public bool NameInputValidate(string input, List<Podcast> list)
         {
-            List<string> podcast = list.Select(p => p.Namn).ToList();
+            List<string> podcast = list.Select(p => p.Title).ToList();
             return !podcast.Contains(input);
         }
 
@@ -54,6 +54,23 @@ namespace Modelss
                 return true;
             }
         }
+
+
+        public static void ExceptionFinder(Exception ex)
+        {
+            string typen = ex.GetType().Name;
+            string message = "";
+            if (typen.Equals("FileNotFoundException"))
+            { message = "Filen kunde inte hittas"; }
+            if (typen.Equals("ArgumentOutOfRangeException"))
+            { message = "Index låg utanför intervallet. Det får inte vara negativt och måste vara mindre än mängdens storlek"; }
+            if (typen.Equals("IndexOutOfRangeException"))
+            { message = "Det valda indexet kunde inte hittas"; }
+            else { message = "Det har uppstått ett oväntat fel " + ex.Message; }
+            MessageBox.Show(message);
+
+        }
+        
 
     }
 

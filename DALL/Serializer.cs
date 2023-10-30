@@ -12,6 +12,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+
 namespace DAL
 {
     internal class Serializer
@@ -71,7 +72,6 @@ namespace DAL
                             line = sr.ReadLine();
                         }
 
-
                     }
                 }
             }
@@ -122,14 +122,15 @@ namespace DAL
                                 if (!string.IsNullOrEmpty(title))
                                 {
                                     Avsnitt avsnitt = new Avsnitt(title, beskrivningen);
-                                    avsnittsLista.Add(avsnitt);
-                                    antalAvsnitt++;
+                                                                        avsnittsLista.Add(avsnitt);
+
+                                    
                                 }
 
                             }
                             Kategori kategori = new Kategori("");
 
-                            podcast = new Podcast(antalAvsnitt, "", poddTitel, kategori, avsnittsLista);
+                            podcast = new Podcast("", poddTitel, kategori, avsnittsLista);
                         }
                     }
 
@@ -167,74 +168,6 @@ namespace DAL
             }
         }
 
-        //public void PoddSerialize(List<Podcast> list)
-        //{
-        //    try 
-
-        //    {
-
-        //        string filePath = "Podcast.xml";
-
-        //        using (FileStream xmlOut = new FileStream(filePath, FileMode.Create, FileAccess.Write))
-        //        {
-
-        //            XmlWriterSettings settings = new XmlWriterSettings
-        //            {
-        //                Indent = true,
-        //              IndentChars = "  ",
-        //              NewLineChars = "\n"   ,
-        //              NewLineHandling = NewLineHandling.Replace
-
-        //            };
-
-        //            using (XmlWriter writer = XmlWriter.Create(xmlOut, settings))
-        //            {
-
-        //                //if (writer.WriteStartDocument != null)
-
-        //                    writer.WriteStartDocument();
-        //                   writer.WriteStartElement("Podcast");
-        //                foreach (Podcast podd in list)
-        //                    {
-
-        //                    writer.WriteElementString("AntalAvsnitt", podd.AntalAvsnitt.ToString());
-        //                        writer.WriteElementString("Title", podd.Title);
-        //                        writer.WriteElementString("Kategori", podd.Kategori.Genre);
-        //                        writer.WriteElementString("Beskrivning", podd.Beskrivning);
-        //                        writer.WriteElementString("Namn", podd.Namn);
-
-        //                        writer.WriteStartElement("AvsnittsLista");
-        //                        foreach (Avsnitt avsnitt in podd.AvsnittsLista)
-        //                        {
-        //                            writer.WriteElementString("AvsnittTitle", avsnitt.Titel);
-        //                        }
-        //                        writer.WriteEndElement(); // AvsnittsLista
-
-        //                        // Avsluta Podcast-elementet.
-        //                        writer.WriteEndElement();
-        //                    // Avsluta rotelementet.
-
-        //                    // Avsluta dokumentet.
-        //                    writer.WriteEndDocument();
-        //                }
-
-
-        //            }
-
-
-        //            }
-
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e.Message);
-        //    }
-
-        //}
-
-
-
-
         public List<Podcast> PoddDeserialize()
         {
             try
@@ -252,50 +185,6 @@ namespace DAL
                 return new List<Podcast>();
             }
         }
-
-
-        //public List<Podcast> PoddDeserialize()
-        //{
-
-        //    List<Podcast> podcastList = new List<Podcast>();
-
-        //    try
-        //    {
-        //        using (FileStream xmlIn = new FileStream("Podcast.xml", FileMode.Open, FileAccess.Read))
-        //        {
-        //            XmlSerializer serializer = new XmlSerializer(typeof(Podcast));
-        //            Podcast podd;
-
-
-        //                try
-        //                {
-        //                    podd = (Podcast)serializer.Deserialize(xmlIn);
-        //                    Console.WriteLine(podd.Beskrivning);
-        //                    podcastList.Add(podd);
-        //                    foreach (Podcast podden in podcastList)
-        //                    {
-        //                        foreach (Avsnitt avsnitt in podden.AvsnittsLista)
-        //                        {
-        //                            Console.WriteLine("test" + avsnitt.Titel);
-        //                        }
-        //                    }
-        //                }
-        //                catch (InvalidOperationException)
-        //                {
-
-        //                }
-
-
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e.Message);
-        //    }
-
-
-        //    return podcastList;
-        //}
 
     }
 }

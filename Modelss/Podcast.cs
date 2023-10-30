@@ -9,7 +9,6 @@ namespace Models
     [Serializable]
     public class Podcast
     {
-        public int AntalAvsnitt { get; set; }
 
         public string Title { get; set; }
         public Kategori Kategori { get; set; }
@@ -20,10 +19,9 @@ namespace Models
         public List<Avsnitt> AvsnittsLista;
 
 
-        public Podcast(int antalAvsnitt, string namn, string title, Kategori kategori, List<Avsnitt> avsnittsLista) {
+        public Podcast(string namn, string title, Kategori kategori, List<Avsnitt> avsnittsLista) {
             Title = title;
             Kategori = kategori;
-            AntalAvsnitt = antalAvsnitt;
             Namn = namn;
             AvsnittsLista = avsnittsLista;
 
