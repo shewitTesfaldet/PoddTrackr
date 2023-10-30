@@ -63,20 +63,20 @@
             // listBoxAvsnitt
             // 
             this.listBoxAvsnitt.FormattingEnabled = true;
-            this.listBoxAvsnitt.Location = new System.Drawing.Point(581, 431);
+            this.listBoxAvsnitt.Location = new System.Drawing.Point(613, 337);
             this.listBoxAvsnitt.Margin = new System.Windows.Forms.Padding(2);
             this.listBoxAvsnitt.Name = "listBoxAvsnitt";
-            this.listBoxAvsnitt.Size = new System.Drawing.Size(262, 381);
+            this.listBoxAvsnitt.Size = new System.Drawing.Size(337, 381);
             this.listBoxAvsnitt.TabIndex = 10;
             this.listBoxAvsnitt.SelectedIndexChanged += new System.EventHandler(this.listBoxAvsnitt_SelectedIndexChanged);
             // 
             // listBoxPoddar
             // 
             this.listBoxPoddar.FormattingEnabled = true;
-            this.listBoxPoddar.Location = new System.Drawing.Point(111, 561);
+            this.listBoxPoddar.Location = new System.Drawing.Point(111, 504);
             this.listBoxPoddar.Margin = new System.Windows.Forms.Padding(2);
             this.listBoxPoddar.Name = "listBoxPoddar";
-            this.listBoxPoddar.Size = new System.Drawing.Size(430, 251);
+            this.listBoxPoddar.Size = new System.Drawing.Size(430, 212);
             this.listBoxPoddar.TabIndex = 11;
             this.listBoxPoddar.SelectedIndexChanged += new System.EventHandler(this.listBoxPoddar_SelectedIndexChanged);
             // 
@@ -87,7 +87,7 @@
             this.buttonKategori.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonKategori.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonKategori.ForeColor = System.Drawing.Color.White;
-            this.buttonKategori.Location = new System.Drawing.Point(239, 530);
+            this.buttonKategori.Location = new System.Drawing.Point(239, 473);
             this.buttonKategori.Margin = new System.Windows.Forms.Padding(2);
             this.buttonKategori.Name = "buttonKategori";
             this.buttonKategori.Size = new System.Drawing.Size(118, 27);
@@ -103,7 +103,7 @@
             this.close.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.close.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.close.ForeColor = System.Drawing.Color.White;
-            this.close.Location = new System.Drawing.Point(827, 54);
+            this.close.Location = new System.Drawing.Point(963, 52);
             this.close.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.close.Name = "close";
             this.close.Size = new System.Drawing.Size(31, 29);
@@ -117,9 +117,9 @@
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(361, 307);
+            this.button1.Location = new System.Drawing.Point(361, 310);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(112, 39);
+            this.button1.Size = new System.Drawing.Size(101, 36);
             this.button1.TabIndex = 14;
             this.button1.Text = "Lägg till ny";
             this.button1.UseVisualStyleBackColor = false;
@@ -138,7 +138,7 @@
             this.btnChange.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnChange.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnChange.ForeColor = System.Drawing.Color.White;
-            this.btnChange.Location = new System.Drawing.Point(361, 530);
+            this.btnChange.Location = new System.Drawing.Point(361, 473);
             this.btnChange.Margin = new System.Windows.Forms.Padding(2);
             this.btnChange.Name = "btnChange";
             this.btnChange.Size = new System.Drawing.Size(81, 27);
@@ -153,7 +153,7 @@
             this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDelete.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnDelete.Location = new System.Drawing.Point(446, 530);
+            this.btnDelete.Location = new System.Drawing.Point(446, 473);
             this.btnDelete.Margin = new System.Windows.Forms.Padding(2);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(95, 27);
@@ -173,7 +173,7 @@
             // 
             // listBoxInfo
             // 
-            this.listBoxInfo.Location = new System.Drawing.Point(521, 204);
+            this.listBoxInfo.Location = new System.Drawing.Point(613, 155);
             this.listBoxInfo.Multiline = true;
             this.listBoxInfo.Name = "listBoxInfo";
             this.listBoxInfo.Size = new System.Drawing.Size(337, 142);
@@ -185,7 +185,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(952, 888);
+            this.ClientSize = new System.Drawing.Size(1053, 765);
             this.Controls.Add(this.listBoxInfo);
             this.Controls.Add(this.CBKategori1);
             this.Controls.Add(this.btnDelete);
