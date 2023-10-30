@@ -141,7 +141,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.RosyBrown;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(557, 595);
+            this.ClientSize = new System.Drawing.Size(512, 577);
             this.Controls.Add(this.Close);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox1);

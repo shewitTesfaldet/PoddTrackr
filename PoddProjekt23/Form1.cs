@@ -41,34 +41,36 @@ namespace PL
             listBoxPoddar.Items.Clear();
             foreach (Podcast item in podcastController.GetAll())
             {
-                listBoxPoddar.Items.Add(item.Title + " " + item.Namn + " " + item.Kategori.Genre);
+                listBoxPoddar.Items.Add("Titel: " + item.Title + "    Namn: " + item.Namn + "    Kategori: " + item.Kategori.Genre);
             }
         }
 
         private void buttonKategori_Click(object sender, EventArgs e)
-        {  try
+        {
+            try
             {
-            string url = textBoxUrl.Text;
-            enPodcast = podcastController.GetPodcast(url);
+                string url = textBoxUrl.Text;
+                enPodcast = podcastController.GetPodcast(url);
 
-            if (enPodcast != null)
-            {
-                List<Podcast> list = podcastController.GetAll();
-
-                if (!validering.NameInputValidate(enPodcast.Title, list))
+                if (enPodcast != null)
                 {
-                    MessageBox.Show("Podden finns redan registrerat, vänligen försök med en annan :)", "Felaktig Inmatning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    List<Podcast> list = podcastController.GetAll();
+
+                    if (!validering.NameInputValidate(enPodcast.Title, list))
+                    {
+                        MessageBox.Show("Podden finns redan registrerat, vänligen försök med en annan :)", "Felaktig Inmatning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    }
                 }
-            }
-            else {
-                MessageBox.Show("Hittar inte podden, försök med en annan url! :)", "Felaktig Inmatning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                else
+                {
+                    MessageBox.Show("Hittar inte podden, försök med en annan url! :)", "Felaktig Inmatning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
-            }
-            if (!validering.textInputsValidate(txtNamn.Text))
-            {
+                }
+                if (!validering.textInputsValidate(txtNamn.Text))
+                {
 
-                MessageBox.Show("Endast bokstäver är tillåtna i namnet!", "Felaktig Inmatning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
+                    MessageBox.Show("Endast bokstäver är tillåtna i namnet!", "Felaktig Inmatning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
 
                 if (!validering.NullNotAcceptedValidate(txtNamn.Text, textBoxUrl.Text, CBKategori.Text))
                 {
@@ -79,8 +81,6 @@ namespace PL
                 {
                     listBoxAvsnitt.Items.Clear();
                     listBoxInfo.Clear();
-
-
 
                     if (enPodcast != null)
                     {
@@ -101,15 +101,15 @@ namespace PL
                             listBoxAvsnitt.Items.Add(avsnitt.Titel);
                         }
 
-                        listBoxPoddar.Items.Add(enPodcast.Title + " " + Namn + " " + enPodcast.Kategori.Genre);
+                        listBoxPoddar.Items.Add("Titel: " + enPodcast.Title + "    Namn: " + Namn + "    Kategori: " + enPodcast.Kategori.Genre);
                         podcastController.CreatePodcast(enPodcast);
                     }
-                }  
+                }
             }
 
-        catch( Exception ex)
+            catch (Exception ex)
             {
-                Validering.ExceptionFinder(ex); 
+                Validering.ExceptionFinder(ex);
             }
         }
 
@@ -121,7 +121,7 @@ namespace PL
         private async void button1_Click(object sender, EventArgs e)
         {
             KategoriForm form1 = new KategoriForm();
-            
+
             // En händelsehanterare för FormClosing-händelsen
             form1.FormClosing += (s, ef) =>
             {
@@ -161,7 +161,6 @@ namespace PL
 
                 if (!validering.textInputsValidate(txtNamn.Text))
                 {
-
                     MessageBox.Show("Endast bokstäver är tillåtna i namnet!", "Felaktig Inmatning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
 
@@ -188,16 +187,14 @@ namespace PL
                 }
             }
 
-         catch(Exception ex)
+            catch (Exception ex)
             {
-                Validering.ExceptionFinder(ex); 
-            
-            
-            }
-          
-        
+                Validering.ExceptionFinder(ex);
 
-    }
+
+            }
+
+        }
 
         private void listBoxPoddar_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -241,7 +238,7 @@ namespace PL
             List<Podcast> podcasts = podcastController.GetAll();
 
             object selectedItem = CBKategori1.SelectedItem;
-            if(selectedItem.Equals("Alla Poddar")) 
+            if (selectedItem.Equals("Alla Poddar"))
             {
                 getPodcast();
             }
@@ -251,11 +248,12 @@ namespace PL
                 listBoxPoddar.Items.Clear();
                 listBoxPoddar.Items.AddRange(filteredPodcasts.Select(p => p.Title).ToArray());
             }
-        
+
         }
 
         private void btnDelete_Click_1(object sender, EventArgs e)
-        { try
+        {
+            try
             {
                 int selectedIndex = listBoxPoddar.SelectedIndex;
 
@@ -270,11 +268,11 @@ namespace PL
                     }
                 }
             }
-        catch (Exception ex)
+            catch (Exception ex)
             {
-                Validering.ExceptionFinder(ex); 
+                Validering.ExceptionFinder(ex);
             }
-           
+
         }
     }
 

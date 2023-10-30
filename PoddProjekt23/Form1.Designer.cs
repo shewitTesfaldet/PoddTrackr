@@ -66,17 +66,17 @@
             this.listBoxAvsnitt.Location = new System.Drawing.Point(581, 431);
             this.listBoxAvsnitt.Margin = new System.Windows.Forms.Padding(2);
             this.listBoxAvsnitt.Name = "listBoxAvsnitt";
-            this.listBoxAvsnitt.Size = new System.Drawing.Size(347, 407);
+            this.listBoxAvsnitt.Size = new System.Drawing.Size(262, 381);
             this.listBoxAvsnitt.TabIndex = 10;
             this.listBoxAvsnitt.SelectedIndexChanged += new System.EventHandler(this.listBoxAvsnitt_SelectedIndexChanged);
             // 
             // listBoxPoddar
             // 
             this.listBoxPoddar.FormattingEnabled = true;
-            this.listBoxPoddar.Location = new System.Drawing.Point(61, 561);
+            this.listBoxPoddar.Location = new System.Drawing.Point(111, 561);
             this.listBoxPoddar.Margin = new System.Windows.Forms.Padding(2);
             this.listBoxPoddar.Name = "listBoxPoddar";
-            this.listBoxPoddar.Size = new System.Drawing.Size(480, 277);
+            this.listBoxPoddar.Size = new System.Drawing.Size(430, 251);
             this.listBoxPoddar.TabIndex = 11;
             this.listBoxPoddar.SelectedIndexChanged += new System.EventHandler(this.listBoxPoddar_SelectedIndexChanged);
             // 
@@ -87,10 +87,10 @@
             this.buttonKategori.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonKategori.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonKategori.ForeColor = System.Drawing.Color.White;
-            this.buttonKategori.Location = new System.Drawing.Point(361, 177);
+            this.buttonKategori.Location = new System.Drawing.Point(239, 530);
             this.buttonKategori.Margin = new System.Windows.Forms.Padding(2);
             this.buttonKategori.Name = "buttonKategori";
-            this.buttonKategori.Size = new System.Drawing.Size(112, 38);
+            this.buttonKategori.Size = new System.Drawing.Size(118, 27);
             this.buttonKategori.TabIndex = 12;
             this.buttonKategori.Text = "Hämta podd";
             this.buttonKategori.UseVisualStyleBackColor = false;
@@ -103,7 +103,7 @@
             this.close.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.close.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.close.ForeColor = System.Drawing.Color.White;
-            this.close.Location = new System.Drawing.Point(914, 56);
+            this.close.Location = new System.Drawing.Point(827, 54);
             this.close.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.close.Name = "close";
             this.close.Size = new System.Drawing.Size(31, 29);
@@ -138,10 +138,10 @@
             this.btnChange.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnChange.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnChange.ForeColor = System.Drawing.Color.White;
-            this.btnChange.Location = new System.Drawing.Point(336, 489);
+            this.btnChange.Location = new System.Drawing.Point(361, 530);
             this.btnChange.Margin = new System.Windows.Forms.Padding(2);
             this.btnChange.Name = "btnChange";
-            this.btnChange.Size = new System.Drawing.Size(95, 38);
+            this.btnChange.Size = new System.Drawing.Size(81, 27);
             this.btnChange.TabIndex = 18;
             this.btnChange.Text = "Ändra";
             this.btnChange.UseVisualStyleBackColor = false;
@@ -153,10 +153,10 @@
             this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDelete.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.btnDelete.Location = new System.Drawing.Point(446, 489);
+            this.btnDelete.Location = new System.Drawing.Point(446, 530);
             this.btnDelete.Margin = new System.Windows.Forms.Padding(2);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(95, 38);
+            this.btnDelete.Size = new System.Drawing.Size(95, 27);
             this.btnDelete.TabIndex = 19;
             this.btnDelete.Text = "Ta bort";
             this.btnDelete.UseVisualStyleBackColor = false;
@@ -173,10 +173,10 @@
             // 
             // listBoxInfo
             // 
-            this.listBoxInfo.Location = new System.Drawing.Point(523, 195);
+            this.listBoxInfo.Location = new System.Drawing.Point(521, 204);
             this.listBoxInfo.Multiline = true;
             this.listBoxInfo.Name = "listBoxInfo";
-            this.listBoxInfo.Size = new System.Drawing.Size(422, 151);
+            this.listBoxInfo.Size = new System.Drawing.Size(337, 142);
             this.listBoxInfo.TabIndex = 23;
             // 
             // Form1
@@ -185,7 +185,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(977, 967);
+            this.ClientSize = new System.Drawing.Size(952, 888);
             this.Controls.Add(this.listBoxInfo);
             this.Controls.Add(this.CBKategori1);
             this.Controls.Add(this.btnDelete);
@@ -201,6 +201,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.Text = "Form1";
             this.ResumeLayout(false);
             this.PerformLayout();
